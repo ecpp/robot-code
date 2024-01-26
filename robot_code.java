@@ -33,8 +33,10 @@ public class Agent2 extends Agent {
     private Point2D position = new Point2D(0, 0);
     private Stack<Point2D> targets = new Stack<>();
     private Point2D rechargingPoint = new Point2D(14357, 15183);
+    private Point2D rottenDropPoint = new Point2D(14357, 15183); //for testing purposes same as recharging point
     //14357 15183
     private double yaw = 0;
+    private boolean isPicked = false;
     private static final int CONSTANT_BATTERY_TIME = 600; // Quarter Seconds
     private int artificialBatteryTime = CONSTANT_BATTERY_TIME;
     private boolean isRunning = true;
@@ -179,7 +181,21 @@ public class Agent2 extends Agent {
                             artificialBatteryTime = 600;
                         }
                         else{
+                            
                             operateGrabber();
+                            if (isPicked){
+                                isPicked = false;
+                            }
+                            else{
+                                int randomNum = (int)(Math.random() * 10);
+                                if (randomNum < 2){
+                                    System.out.println("Going to rotten drop point.");
+                                    targets.push(rottenDropPoint);
+                                }
+                                isPicked = true;
+                            }
+                            
+                            
                         }
                         targets.pop();
                     }
